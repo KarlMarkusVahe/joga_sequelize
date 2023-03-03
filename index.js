@@ -17,9 +17,8 @@ sequelize
         console.error('Unable to connect to database', err)
     })
 
-app.get("/", (req, res) => {
-    res.json({message: "Welcome"})
-})
+const articleRouter = require('./routes/article')
+app.use('/', articleRouter)
 
 app.listen(3000, () => {
     console.log('Server is running')
