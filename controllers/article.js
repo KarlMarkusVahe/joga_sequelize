@@ -2,6 +2,7 @@ const Sequelize = require("sequelize")
 const sequelize = new Sequelize('mysql://root:qwerty@localhost:3306/joga_sequelize')
 
 const models = require('../models')
+const {where} = require("sequelize");
 
 const getAllArticles = (req, res) => {
     models.Article.findAll()
@@ -32,9 +33,23 @@ const getArticleBySlug = (req, res) => {
         })
 }
 
-
+const getArticlesByAuthor = (req, res) => {
+    models.Article.findAll({
+        where: {
+            author_id:req.params.author_id
+        },
+    })
+        .then(article => {
+            console.log(article)
+            return res.status(200).json({ article })
+        })
+        .catch(error => {
+            return res.status(500).send(error.message)
+        })
+}
 
 module.exports = {
     getAllArticles,
-    getArticleBySlug
+    getArticleBySlug,
+    getArticlesByAuthor
 }
