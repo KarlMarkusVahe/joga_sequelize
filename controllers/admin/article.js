@@ -27,6 +27,34 @@ const createArticle = (req, res) => {
         })
 }
 
+const updateArticle = (req, res) => {
+    if(req.method == "POST") {
+        let name = req.body.name
+        let slug = req.body.slug
+        let image = req.body.image
+        let body = req.body.body
+        let author = req.body.author_id
+        models.Article.update({
+            name: name,
+            slug: slug,
+            image: image,
+            body: body,
+            author_id:author,
+            updatedAt: new Date().toISOString().slice(0,19).replace('T',' ')
+        },{
+            where:{id: req.params.id}
+        })
+            .then(articles => {
+                console.log(articles)
+                return res.status(200).json({message: "New article"})
+            })
+            .catch(error => {
+                return res.status(500).send(error.message)
+            })
+    }
+}
+
 module.exports = {
-    createArticle
+    createArticle,
+    updateArticle
 }
