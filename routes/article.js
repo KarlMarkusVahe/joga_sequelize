@@ -11,11 +11,16 @@ router.get('/admin/article/edit/:id', (req, res) => {
     res.render('edit')
 })
 
+router.get('/admin/article/delete/:id', (req, res) => {
+    res.render('delete')
+})
+
 router.get('/', articleController.getAllArticles)
 router.get('/article/:slug', articleController.getArticleBySlug)
 router.get('/author/:author_id', articleController.getArticlesByAuthor)
 
 router.post('/admin/article/create', articleAdminController.createArticle)
 router.post('/admin/article/edit/:id', articleAdminController.updateArticle)
+router.post('/admin/article/delete/:id', articleAdminController.deleteArticle)
 
 module.exports = router

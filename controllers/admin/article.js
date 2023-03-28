@@ -28,7 +28,6 @@ const createArticle = (req, res) => {
 }
 
 const updateArticle = (req, res) => {
-    if(req.method == "POST") {
         let name = req.body.name
         let slug = req.body.slug
         let image = req.body.image
@@ -51,10 +50,23 @@ const updateArticle = (req, res) => {
             .catch(error => {
                 return res.status(500).send(error.message)
             })
-    }
+}
+
+const deleteArticle = (req, res) => {
+        models.Article.destroy({
+            where: {id: req.params.id}
+        })
+            .then(articles => {
+                console.log(articles)
+                return res.status(200).json({message: "Article was deleted"})
+            })
+            .catch(error => {
+                return res.status(500).send(error.message)
+            })
 }
 
 module.exports = {
     createArticle,
-    updateArticle
+    updateArticle,
+    deleteArticle
 }
